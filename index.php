@@ -73,6 +73,8 @@ if (!file_exists($path)) {
     <meta property="og:title" content="<?php echo $title; ?>" />
     <meta property="og:description" content="<?php echo $description; ?>" />
     <meta property="og:image" content="<?php echo "/$path"; ?>" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
     <style>
@@ -138,10 +140,20 @@ if (!file_exists($path)) {
     </div>
     <div class="footer">
       <a href="https://github.com/denys-potapov/syvokho">github</a>
-      <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Поширити</a></div>
+      <div class="fb-share-button" data-href="https://&#x441;&#x438;&#x432;&#x43e;&#x445;&#x43e;.&#x443;&#x43a;&#x440;/" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxn--b1altal1a.xn--j1amh%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Поширити</a></div>
       <a href="https://www.denyspotapov.com/">Денис Потапов</a>
     </div>
   </body>
+
   <div id="fb-root"></div>
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/sdk.js#xfbml=1&version=v6.0&appId=599480133566803&autoLogAppEvents=1"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160647519-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-160647519-1');
+  </script>
 </html>
