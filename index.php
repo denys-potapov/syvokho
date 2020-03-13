@@ -1,20 +1,40 @@
-<!DOCTYPE html>
+<?php
+
+function pluralForm($n, $forms)
+{
+    if (($n % 10 == 1) && ($n % 100 != 11)) {
+        return $forms[0];
+    }
+
+    if ((($n % 10) >= 2) && (($n % 10) <= 4)) {
+        if ((($n % 100) < 10) || (($n % 100) >= 20)) {
+            return $forms[1];
+        };
+    };
+
+    return  $forms[2];
+}
+
+$requestedDays = intval($_SERVER['QUERY_STRING']);
+$title = "Скільки днів не били Сивоху?";
+$days = 22; ///$requestedDays;
+$text = pluralForm($days, ["день", "дня", "днів"]);
+
+?><!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Скільки днів не били Сивоху?</title>
-
+    <title><?php echo $title; ?></title>
+    <meta name="description" content="<?php echo $description; ?>">
+    
     <meta property="og:url" content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
     <meta property="og:type" content="article" />
-    <meta property="og:title"              content="When Great Minds Don’t Think Alike" />
-    <meta property="og:description"        content="How much does culture influence creative thinking?" />
-    <meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+    <meta property="og:title" content="<?php echo $title; ?>" />
+    <meta property="og:description" content="<?php echo $description; ?>" />
+    <meta property="og:image" content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
     <style>
@@ -75,7 +95,9 @@
   <body>
     <div class="container">
       <h1>
-        Сивоху не&nbsp;били <span id="days">1</span> день</h1>
+        Сивоху не&nbsp;били <span id="days"><?php echo $days
+        ; ?></span> 
+        <?php echo $text; ?></h1>
     </div>
     <div class="footer">
       <a href="https://github.com/denys-potapov/syvokho">github</a>
