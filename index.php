@@ -38,7 +38,7 @@ if (($days != $realDays) && (!$debug)) {
 }
 
 $title = "Скільки днів не били Сивоху?";
-$text = pluralForm($days, ["день", "дня", "днів"]);
+$text = pluralForm($days, ["день", "дні", "днів"]);
 $answer = "Сивоху не били";
 $description = "$answer $days $text";
 
@@ -68,11 +68,12 @@ if (!file_exists($path)) {
 
     <title><?php echo $title; ?></title>
     <meta name="description" content="<?php echo "$description"; ?>">
-    
+      
     <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://xn--b1altal1a.xn--j1amh/" />
     <meta property="og:title" content="<?php echo $title; ?>" />
     <meta property="og:description" content="<?php echo $description; ?>" />
-    <meta property="og:image" content="<?php echo "/$path"; ?>" />
+    <meta property="og:image" content="https://xn--b1altal1a.xn--j1amh/<?php echo "$path"; ?>" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -113,8 +114,8 @@ if (!file_exists($path)) {
         }
         .footer a {
           display: block;
-          padding-bottom: 0.5em;
-          padding-top: 0.5em;
+          padding-bottom: 1em;
+          padding-top: 1em;
         }
       }
       #days {
