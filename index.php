@@ -1,5 +1,7 @@
 <?php
 
+require_once('syvokho.php');
+
 function pluralForm($n, $forms)
 {
     if (($n % 10 == 1) && ($n % 100 != 11)) {
@@ -15,11 +17,19 @@ function pluralForm($n, $forms)
     return  $forms[2];
 }
 
-$requestedDays = intval($_SERVER['QUERY_STRING']);
-$title = "Скільки днів не били Сивоху?";
-$days = 22; ///$requestedDays;
-$text = pluralForm($days, ["день", "дня", "днів"]);
+$qs = $_SERVER['QUERY_STRING'];
+$debug = (strpos($qs, 'debug') !== false);
+$requestedDays = intval($qs);
 
+$days = date_diff($syvokhoTime, date_create())->days;
+if (($days != $requestedDays) && (!$debug)) {
+    header("Location: /?$days", true, 307);
+    exit;
+}
+
+$title = "Скільки днів не били Сивоху?";
+$days = $requestedDays;
+$text = pluralForm($days, ["день", "дня", "днів"]);
 ?><!DOCTYPE html>
 <html lang="en">
   <head>
