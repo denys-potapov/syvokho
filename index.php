@@ -17,19 +17,48 @@ function pluralForm($n, $forms)
     return  $forms[2];
 }
 
+function centerText($im, $y, $text, $font, $size, $color)
+{
+    $center = imagesx($im) / 2;
+    list($left, , $right, , ,) = imageftbbox($size, 0, $font, $text);
+
+    $x = $center - ($right - $left) / 2;
+    $y = $y + $size / 2;
+    imagettftext($im, $size, 0, $x, $y, $color, $font, $text);
+}
+
 $qs = $_SERVER['QUERY_STRING'];
 $debug = (strpos($qs, 'debug') !== false);
-$requestedDays = intval($qs);
+$days = intval($qs);
 
-$days = date_diff($syvokhoTime, date_create())->days;
-if (($days != $requestedDays) && (!$debug)) {
-    header("Location: /?$days", true, 307);
+$realDays = date_diff($syvokhoTime, date_create())->days;
+if (($days != $realDays) && (!$debug)) {
+    header("Location: /?$realDays", true, 307);
     exit;
 }
 
 $title = "Скільки днів не били Сивоху?";
-$days = $requestedDays;
 $text = pluralForm($days, ["день", "дня", "днів"]);
+$answer = "Сивоху не били";
+$description = "$answer $days $text";
+
+$path = "images/$days.png";
+if (!file_exists($path)) {
+    $w = 1200;
+    $h = 630;
+    $im = imagecreatetruecolor($w, $h);
+
+    $bg = imagecolorallocate($im, 0xff, 0x52, 0x52);
+    imagefill($im, 0, 0, $bg);
+
+    $white = imagecolorallocate($im, 255, 255, 255);
+
+    centerText($im, 120, $answer, "fonts/Roboto-Bold.ttf", 70, $white);
+    centerText($im, $h / 2, $days, "fonts/Roboto-Medium.ttf", 160, $white);
+    centerText($im, 500, $text, "fonts/Roboto-Bold.ttf", 70, $white);
+
+    imagepng($im, $path);
+}
 ?><!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,13 +67,12 @@ $text = pluralForm($days, ["день", "дня", "днів"]);
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><?php echo $title; ?></title>
-    <meta name="description" content="<?php echo $description; ?>">
+    <meta name="description" content="<?php echo "$description"; ?>">
     
-    <meta property="og:url" content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="<?php echo $title; ?>" />
     <meta property="og:description" content="<?php echo $description; ?>" />
-    <meta property="og:image" content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+    <meta property="og:image" content="<?php echo "/$path"; ?>" />
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
     <style>
@@ -105,8 +133,7 @@ $text = pluralForm($days, ["день", "дня", "днів"]);
   <body>
     <div class="container">
       <h1>
-        Сивоху не&nbsp;били <span id="days"><?php echo $days
-        ; ?></span> 
+        Сивоху не&nbsp;били <span id="days"><?php echo $days; ?></span> 
         <?php echo $text; ?></h1>
     </div>
     <div class="footer">
